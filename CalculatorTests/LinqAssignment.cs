@@ -9,7 +9,7 @@ namespace CalculatorTests
     [TestClass]
     public class LinqAssignment
     {
-        //-------------------------------- One -------------------------------------------------
+        //--------------------What is the average transaction amount for each tag?--------------------------
         [TestMethod]
         public void AvgAmountTag()
         {
@@ -22,7 +22,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Two -------------------------------------------------
+        //------------------------How much did you pay each payee?---------------------------------------------
         [TestMethod]
         public void SumOfMoneySpentPerPayee()
         {
@@ -40,7 +40,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Three -------------------------------------------------
+        //-------------------------How much did you pay each payee for food?--------------------------------
         [TestMethod]
         public void SumOfMoneySpentOnFoodPerPayee()
         {
@@ -58,7 +58,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Four -------------------------------------------------
+        //---------------------List the transaction between April 5th and 7th-------------------------------
         [TestMethod]
         public void TransacsBwnDates()
         {
@@ -70,7 +70,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Five -------------------------------------------------
+        //---------------------List the dates on which each account was used--------------------------------
         [TestMethod]
         public void DatesEachAccountUsed()
         {
@@ -82,7 +82,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Six -------------------------------------------------
+        //---------------------Which account was used most (amount of money) on auto expenses?------------------
         [TestMethod]
         public void MoreMoneyOnAuto()
         {
@@ -95,7 +95,7 @@ namespace CalculatorTests
         }
 
 
-        //-------------------------------- Seven -------------------------------------------------
+        //-----------------List the number of transactions from each account between April 5th and 7th-----------
         [TestMethod]
         public void TransacsBwnDatesForEachAccount()
         {
