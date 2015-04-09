@@ -11,7 +11,7 @@ namespace CalculatorTests
     {
         //--------------------What is the average transaction amount for each tag?--------------------------
         [TestMethod]
-        public void AvgAmountTag()
+        public void AvgTransactionAmountPerTag()
         {
             var ob = new CheckBookVM();
             ob.Fill();
@@ -24,89 +24,94 @@ namespace CalculatorTests
 
         //------------------------How much did you pay each payee?---------------------------------------------
         [TestMethod]
-        public void SumOfMoneySpentPerPayee()
+        public void SumOfMoneyPaidPerPayee()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var PaymentToMoshe = ob.Transactions.Where(p => p.Payee == "Moshe").Sum(a => a.Amount);
-            Assert.AreEqual(130, PaymentToMoshe);
+            var MoneyPaidToMoshe = ob.Transactions.Where(p => p.Payee == "Moshe").Sum(a => a.Amount);
+            Assert.AreEqual(130, MoneyPaidToMoshe);
 
-            var PaymentToTim = ob.Transactions.Where(p => p.Payee == "Tim").Sum(a => a.Amount);
-            Assert.AreEqual(300, PaymentToTim);
+            var MoneyPaidToTim = ob.Transactions.Where(p => p.Payee == "Tim").Sum(a => a.Amount);
+            Assert.AreEqual(300, MoneyPaidToTim);
 
-            var PaymentToBracha = ob.Transactions.Where(p => p.Payee == "Bracha").Sum(a => a.Amount);
-            Assert.AreEqual(131, PaymentToBracha);
+            var MoneyPaidToBracha = ob.Transactions.Where(p => p.Payee == "Bracha").Sum(a => a.Amount);
+            Assert.AreEqual(131, MoneyPaidToBracha);
         }
 
 
         //-------------------------How much did you pay each payee for food?--------------------------------
         [TestMethod]
-        public void SumOfMoneySpentOnFoodPerPayee()
+        public void SumOfMoneySpentOnFoodToPayee()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var PaymentToMoshe = ob.Transactions.Where(p => p.Payee == "Moshe" && p.Tag == "Food").Sum(a => a.Amount);
-            Assert.AreEqual(130, PaymentToMoshe);
+            var MoneyPaidToMoshe = ob.Transactions.Where(p => p.Payee == "Moshe" && p.Tag == "Food").Sum(a => a.Amount);
+            Assert.AreEqual(130, MoneyPaidToMoshe);
 
-            var PaymentToTim = ob.Transactions.Where(p => p.Payee == "Tim" && p.Tag == "Food").Sum(a => a.Amount);
-            Assert.AreEqual(0, PaymentToTim);
+            var MoneyPaidToTim = ob.Transactions.Where(p => p.Payee == "Tim" && p.Tag == "Food").Sum(a => a.Amount);
+            Assert.AreEqual(0, MoneyPaidToTim);
 
-            var PaymentToBracha = ob.Transactions.Where(p => p.Payee == "Bracha" && p.Tag == "Food").Sum(a => a.Amount);
-            Assert.AreEqual(131, PaymentToBracha);
+            var MoneyPaidToBracha = ob.Transactions.Where(p => p.Payee == "Bracha" && p.Tag == "Food").Sum(a => a.Amount);
+            Assert.AreEqual(131, MoneyPaidToBracha);
         }
 
 
         //---------------------List the transaction between April 5th and 7th-------------------------------
         [TestMethod]
-        public void TransacsBwnDates()
+        public void TransactionsBwnDates()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var TransacsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8")).Count();
-            Assert.AreEqual(6, TransacsCount);
+            var TransactionsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8")).Count();
+            Assert.AreEqual(6, TransactionsCount);
+
+            var TransactionsList = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8")).Select(g => new { g.Date, g.Account, g.Payee, g.Amount, g.Tag });
         }
 
 
         //---------------------List the dates on which each account was used--------------------------------
         [TestMethod]
-        public void DatesEachAccountUsed()
+        public void DatesOnEachAccountUsed()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var DatesAccounts = ob.Transactions.Select(g => new { g.Date, g.Account }).Count();
-            Assert.AreEqual(12, DatesAccounts);
+            var DatesNdAccounts = ob.Transactions.Select(g => new { g.Date, g.Account }).Count();
+            Assert.AreEqual(12, DatesNdAccounts);
+
+            var DatesNAccountsList = ob.Transactions.Select(g => new { g.Date, g.Account }).Count();
         }
 
 
         //---------------------Which account was used most (amount of money) on auto expenses?------------------
         [TestMethod]
-        public void MoreMoneyOnAuto()
+        public void MoreMoneySpentOnAuto()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var Checkingtotal = ob.Transactions.Where(p => p.Tag == "Auto" && p.Account == "Checking").Sum(a => a.Amount);
-            var Credittotal = ob.Transactions.Where(p => p.Tag == "Auto" && p.Account == "Credit").Sum(a => a.Amount);
-            Assert.IsTrue(Checkingtotal == Credittotal);
+            var CheckingAmount = ob.Transactions.Where(p => p.Tag == "Auto" && p.Account == "Checking").Sum(a => a.Amount);
+            var CreditAmount = ob.Transactions.Where(p => p.Tag == "Auto" && p.Account == "Credit").Sum(a => a.Amount);
+            
+            Assert.IsTrue(CheckingAmount == CreditAmount);
         }
 
 
         //-----------------List the number of transactions from each account between April 5th and 7th-----------
         [TestMethod]
-        public void TransacsBwnDatesForEachAccount()
+        public void TransactionsBwnDatesForEachAccount()
         {
             var ob = new CheckBookVM();
             ob.Fill();
 
-            var CheckingChckingTransacsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8") && d.Account == "Checking").Count();
-            Assert.AreEqual(3, CheckingChckingTransacsCount);
+            var CreditTransactionsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8") && d.Account == "Credit").Count();
+            Assert.AreEqual(3, CreditTransactionsCount);
 
-            var CreditTransacsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8") && d.Account == "Credit").Count();
-            Assert.AreEqual(3, CreditTransacsCount);
+            var CheckingTransactionsCount = ob.Transactions.Where(d => d.Date >= DateTime.Parse("2015-4-5") && d.Date < DateTime.Parse("2015-4-8") && d.Account == "Checking").Count();
+            Assert.AreEqual(3, CheckingTransactionsCount);
         }
     }
 }
